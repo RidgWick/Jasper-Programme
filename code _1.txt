@@ -1,0 +1,110 @@
+	ORG 0000
+	MOVE #$00,A
+	MOVE A,all
+
+
+input_1	MOVE #$00,A
+	MOVE #$00,B
+check0	MOVE $E1,B
+	CMP #$00,B
+	BEQ check0
+	MOVE $E0,A
+	MOVE A,$E2
+
+	CMP #$31,A
+	BEQ add8
+add8r	JMP input_2
+
+input_2	MOVE #$00,A
+	MOVE #$00,B
+check1	MOVE $E1,B
+	CMP #$00,B
+	BEQ check1
+	MOVE $E0,A
+	MOVE A,$E2
+
+	CMP #$31,A
+	BEQ add4
+add4r	JMP input_3
+
+input_3	MOVE #$00,A
+	MOVE #$00,B
+check2	MOVE $E1,B
+	CMP #$00,B
+	BEQ check2
+	MOVE $E0,A
+	MOVE A,$E2
+
+	CMP #$31,A
+	BEQ add2
+add2r	JMP input_4
+
+input_4	MOVE #$00,A
+	MOVE #$00,B
+check3	MOVE $E1,B
+	CMP #$00,B
+	BEQ check3
+	MOVE $E0,A
+	MOVE A,$E2
+
+	CMP #$31,A
+	BEQ add1
+add1r	MOVE #$0A,A
+ncheck	MOVE $E3,B
+	CMP #$00,B
+	BEQ ncheck
+	MOVE A,$E2
+	JMP OUTPUT
+
+
+
+
+
+add8	MOVE all,A
+	ADD #$08,A
+	MOVE A,all
+	JMP add8r
+
+
+add4	MOVE all,A
+	ADD #$04,A
+	MOVE A,all
+	JMP add4r
+
+add2	MOVE all,A
+	ADD #$02,A
+	MOVE A,all
+	JMP add2r
+	
+add1	MOVE all,A
+	ADD #$01,A
+	MOVE A,all
+	JMP add1r
+
+
+OUTPUT	MOVE all,A
+	CMP #$0A,A
+	BMI single
+double	MOVE #$31,A
+check4	MOVE $E3,B
+	CMP #$00,B
+	BEQ check4
+	MOVE A,$E2
+	MOVE all,A
+	SUB #$0A,A
+	ADD #$30,A
+check5	MOVE $E3,B
+	CMP #$00,B
+	BEQ check5
+	MOVE A,$E2
+	JMP end
+	 
+single	ADD #$30,A
+check6	MOVE $E3,B
+	CMP #$00,B
+	BEQ check6
+	MOVE A,$E2
+end	HALT
+
+
+all	DC.W 0
