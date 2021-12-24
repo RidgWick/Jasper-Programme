@@ -1,0 +1,274 @@
+* Memory Mapped I/O -
+OSR	EQU $E3
+ODR	EQU $E2
+ISR	EQU $E1
+IDR	EQU $E0
+secs	EQU $E8
+	
+	ORG 0000
+	MOVE Counter_v,A
+	MOVE #$00,A
+	MOVE A,Counter_v
+	MOVE random_num,A
+	MOVE #$00,A
+	MOVE A,random_num	
+	MOVE Total,A
+	MOVE #$00,A
+	MOVE A,Total
+
+	MOVE #$D0,SP
+	MOVE secs,A
+	AND #$0F,A
+	ADD #$01,A
+	MOVE A,random_num
+	MOVE #initial_m,A
+	JSR putustring
+	JMP #get_input
+	
+
+
+
+get_input
+	MOVE #$00,A
+	MOVE A,Total
+	JSR getchar
+	CMP #$30,B
+	BNE attempt_2
+	JSR getchar
+	MOVE Total,A
+	SUB #$30,B
+	ADD B,A
+	MOVE A,Total
+back1	JMP #math_part
+
+attempt_2
+	CMP #$31,B
+	BNE sk_part
+	MOVE Total,A
+	ADD #$0A,A
+	MOVE A,Total
+	JSR getchar
+	SUB #$30,B
+	MOVE Total,A
+	ADD B,A
+	MOVE A,Total
+	JMP back1
+sk_part	SUB #$30,B
+	MOVE Total,A
+	ADD B,A
+	MOVE A,Total
+	JMP back1
+
+
+math_part
+	MOVE Counter_v,A
+	ADD #$01,A
+	MOVE A,Counter_v
+	MOVE Total,A
+	MOVE random_num,B
+	CMP A,B
+	BEQ greeting
+	BMI low_m
+	BPL high_m
+	
+
+high_m	MOVE #msghigh,A
+	JSR putustring
+	JMP #get_input
+
+low_m	MOVE #msglow,A
+	JSR putustring
+	JMP #get_input
+
+
+greeting	MOVE #win,A
+	JSR putstring
+	MOVE Counter_v,B
+	CMP #$0A,B
+	BMI next_line
+	JMP higher
+next_line	JMP lower
+back_next	MOVE #win2,A
+	JSR putstring
+	HALT
+
+lower	ADD #$30,B
+	JSR putchar
+	JMP back_next
+
+higher	CMP #$14,B
+	BPL higher2
+	PUSH B
+	MOVE #$31,B
+	JSR putchar
+	POP B
+	SUB #$0A,B
+	ADD #$30,B
+	JSR putchar
+	JMP back_next
+
+
+higher2	PUSH B
+	MOVE #$32,B
+	JSR putchar
+	POP B
+	SUB #$14,B
+	ADD #$30,B
+	JSR putchar
+	JMP back_next
+
+
+
+
+
+
+
+
+
+     * Print Packed String - 
+
+putstring                  
+        MOVE (A),B         
+        SWAP B             
+        PUSH A             
+        MOVE #$ff,A        
+        AND  A,B           
+        POP  A             
+        CMP  #$00,B        
+        BEQ  _puts_done    
+        JSR  putchar       
+        MOVE (A),B         
+        PUSH A             
+        MOVE #$ff,A        
+        AND  A,B           
+        POP  A             
+        CMP  #$00,B        
+        BEQ  _puts_done    
+        JSR  putchar       
+        ADD  #$01,A        
+        JMP  putstring     
+_puts_done                 
+        RTS 
+	
+     * Print Unpacked String - 
+
+putustring                         
+_pus_next                          
+        MOVE (A),B                 
+        CMP #$0,B                  
+        BEQ _pus_done              
+        JSR  putchar               
+        ADD #$1,A                  
+        JMP _pus_next              
+_pus_done                          
+        RTS                        
+  
+
+    * output status check and print output -
+
+putchar	PUSH A
+o_check	
+	MOVE OSR,A
+	CMP #$00,A
+	BEQ #o_check
+	MOVE B,ODR
+	POP A
+	RTS            
+
+
+    * input status check and take input -
+
+getchar	PUSH A
+i_check	
+	MOVE ISR,A
+	CMP #$00,A
+	BEQ #i_check
+	MOVE IDR,B
+	JSR putchar
+	POP A
+	RTS
+
+
+
+initial_m	DC.W 002A
+	DC.W 002A	
+	DC.W 0050	
+	DC.W 006C
+	DC.W 0065
+	DC.W 0061
+	DC.W 0073
+	DC.W 0065
+	DC.W 0020
+	DC.W 0054
+	DC.W 0079
+	DC.W 0070
+	DC.W 0065
+	DC.W 0020
+	DC.W 0074
+	DC.W 0077
+	DC.W 006F
+	DC.W 0020
+	DC.W 0064
+	DC.W 0069
+	DC.W 0067
+	DC.W 0069
+	DC.W 0074
+	DC.W 0020
+	DC.W 0076
+	DC.W 0061
+	DC.W 006C
+	DC.W 0075
+	DC.W 0065
+	DC.W 0020
+	DC.W 0062
+	DC.W 0065
+	DC.W 0074
+	DC.W 0077
+	DC.W 0065
+	DC.W 0065
+	DC.W 006E
+	DC.W 0028
+	DC.W 0030
+	DC.W 0031
+	DC.W 002D
+	DC.W 0031
+	DC.W 0036
+	DC.W 0029
+	DC.W 002E
+	DC.W 002A
+	DC.W 002A
+	DC.W 000D
+	DC.W 000A
+	DC.W 0000
+
+
+msghigh	DC.W 000A
+	DC.W 0048
+	DC.W 0069
+	DC.W 0067
+	DC.W 0068
+	DC.W 0065
+	DC.W 0072
+	DC.W 000D
+	DC.W 000A
+	DC.W 0000	
+
+msglow	DC.W 000A
+	DC.W 004C
+	DC.W 006F
+	DC.W 0077
+	DC.W 0065
+	DC.W 0072
+	DC.W 000D
+	DC.W 000A
+	DC.W 0000
+
+win	DC.B '\nCorrect. You made ',0
+win2	DC.B ' guesses.\n',0
+
+
+
+count	DC.W 0
+Counter_v	DC.W 0
+Total	DC.W 0
+random_num	DC.W 0
