@@ -15,20 +15,16 @@ screen as they are typed. If any other digits or letters are typed, they will be
 not be displayed.
 2. The program will convert the digits to a decimal number and display it on the next line.
 3. The program will then end.
+
 Example output:
 
 0010
-
 2
 
-
 1111
-
 15
 
-
 1010
-
 10
 
 
@@ -50,20 +46,13 @@ too high, the program will say “Lower.” If the user guesses the correct numb
 Example output:
 
 8
-
 Higher
-
 
 12
-
 Lower
 
-
 10
-
 Higher
 
-
 11
-
 Correct. You made 4 guesses.
