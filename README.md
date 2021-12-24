@@ -2,7 +2,7 @@
 Write Assembly Language Programme for Jasper Processor.
 
 Here we have 2 task and there solutions.
-open the directory called CODE and download as a text documents. Save it on the Jasper extracted directory and use it. 
+from the branch main you can view and download those code files as a text documents. Save it on the Jasper extracted directory and use it. 
 
 
 
