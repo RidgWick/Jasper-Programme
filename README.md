@@ -18,13 +18,19 @@ not be displayed.
 Example output:
 
 0010
+
 2
 
+
 1111
+
 15
 
+
 1010
+
 10
+
 
 
 
@@ -40,12 +46,24 @@ program will choose a random number from 1 to 16. The user will try to guess wha
 guesses a number that is too low, the program will say, “Higher.” If the user guesses a number that is
 too high, the program will say “Lower.” If the user guesses the correct number, the program will say,
 “Correct.”, and also display the number of guesses the user made before getting the right answer.
+
 Example output:
+
 8
+
 Higher
+
+
 12
+
 Lower
+
+
 10
+
 Higher
+
+
 11
+
 Correct. You made 4 guesses.
