@@ -1,5 +1,11 @@
 # Jasper-Assembly-Language-Programme
-Write Assembly Language Programme for Jasper Processor.
+# jasper assembly language Reference
+# jasper programming problem
+
+// Author : MD Rifat 
+// email : 0x0mmrhr.ridgwick@hackermail.com
+
+Write Assembly Language Programme for # Jasper Processor.
 
 Here we have 2 task and there solutions.
 from the branch main you can view and download those code files as a text documents. Save it on the Jasper extracted directory and use it. 
@@ -63,3 +69,6 @@ Higher
 11
 
 Correct. You made 4 guesses.
+
+
+
